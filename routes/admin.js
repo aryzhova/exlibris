@@ -1,22 +1,19 @@
 const express = require('express');
+const adminController = require('../controllers/admin');
 
 const router = express.Router();
- 
-// /admin/add-book GET request
-router.get('/add-book', (req, res) => {
-  res.render('admin/add-book', { pageTitle: 'Add Book'});
-});
 
-// /admin/add-book POST request
-router.post('/add-book', (req, res) => {
-  console.log(req.body);
-  res.redirect('/');
-});
+// /add-book GET request
+router.get('/add-book', adminController.getAddBook);
 
-router.get('/pastdue', (req, res) => {
-  console.log(req.body);
-  res.render('admin/pastdue', { pageTitle: 'Items past due'});
-});
+// /add-book POST request
+router.post('/add-book', adminController.postAddBook);
+
+// /pastdue GET request
+router.get('/pastdue', adminController.getPastDue);
+
+// /holds GET request
+router.get('/holds', adminController.getHolds);
 
 module.exports = router;
 

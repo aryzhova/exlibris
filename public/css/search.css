@@ -1,0 +1,40 @@
+.search_bar{
+    background-color: #14213d;
+    height: 100px;
+    position: absolute;
+    width: 100%;
+}
+
+h3{
+    display: inline-block;
+    color: #fca311;
+    margin-left: 30px;
+}
+
+.form_search{
+    position: relative;
+    margin-top: 20px;
+    
+}
+
+button {
+    background-color:  #fca311;
+    color: #14213d;
+    margin: 0;
+    border: 1px solid #14213d;
+    height: 35px;
+}
+
+input, select{
+    height: 30px;
+    border: none;
+    color: #14213d;
+}
+
+select {
+    height: 35px;
+}
+
+form {
+    margin: 0 auto;
+}

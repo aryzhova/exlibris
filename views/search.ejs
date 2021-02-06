@@ -1,6 +1,20 @@
 <%- include('includes/head.ejs')%>
+<link rel="stylesheet" href="css/search.css">
 </head>
 <body>
 <%- include('includes/header.ejs')%>
+<div class="search_bar">
+    <form class="form_search" action="/" method="POST">
+        <h3>Search by</h3>
+        <select name="searchBy">
+            <option value="title" aria-checked="true">Title</option>
+            <option value="author">Author</option>
+        </select>
+        <h3>For</h3>
+        <input type="text" placeholder="Enter keywords..." name="search2">
+        <button type="submit">search</button>
+      </form>
+</div>
 </body>
+
 </html>

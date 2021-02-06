@@ -18,7 +18,7 @@ exports.getMyRequests = (req, res, next) => {
 }
 
 exports.getHistory = (req, res, next) => {
-  res.render('history', {
+  res.render('reader/history', {
     pageTitle: 'History'
   });
 }

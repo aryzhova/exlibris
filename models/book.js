@@ -3,10 +3,11 @@ class Book {
   title;
   author;
   year;
+  imageUrl;
   description;
   isAvailable;
   currentlyBorrowedBy;
   queue;
-
+  
   constructor(){}
 }

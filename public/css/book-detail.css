@@ -1,0 +1,60 @@
+
+.book_image{
+    width: 225px;
+    height: 340px;
+}
+
+.img_container{
+    height:340px;
+    float: left;
+    
+    margin: 0 15px;
+}
+
+header {
+    color: #457b9d;
+}
+
+h3{
+    font-family: Georgia,"Palatino Linotype","Book Antiqua",Palatino,serif;
+    font-style: italic;
+}
+
+.avail {
+    color:#179c17;
+    border: 2px solid #179c17;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.borrowed {
+    color:red;
+    border: 2px solid red;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.queue {
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: 10px;
+}
+
+
+.button{
+    display: block;
+    text-decoration: none;
+    border: 2px solid #14213d;
+    background-color:  #fca311;
+    border-radius: 4px;
+    color: #14213d;
+    font-weight: 600;
+    padding: 3% 25%;
+    width: 110px;
+}
+
+.button:hover {
+    background-color:  #e79106;
+    color:  #14213d;
+}

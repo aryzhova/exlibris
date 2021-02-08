@@ -1,0 +1,91 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="css/add-book.css">
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>>
+    <%- include('includes/header.ejs')%>
+   
+   <article>
+    <div class="tab">
+      <button class="tablinks active" onclick="openTab(event, 'Login')">Log in</button>
+      <button class="tablinks" onclick="openTab(event, 'Signup')">Sign up</button>
+    </div>
+      <!-- LOGIN tab -->
+    <div id="Login" class="tabcontent login">
+        <form>
+            <div class="form-control"> 
+                <label><b>Email</b></label>  
+                <input type="email" 
+                        placeholder="Enter email"
+                        name="email" required>  
+                <i class="fa fa-user fa-lg"></i> 
+            </div> 
+              
+            <div class="form-control"> 
+                <label><b>Password</b></label>  
+                <input type="password"
+                        placeholder="Enter Password"
+                        name="psw" required>  
+                <i class="fa fa-key fa-lg"></i> 
+            </div>    
+              
+            <button type="submit" class="button">Login</button>  
+          </form>
+    </div>
+    <!-- SIGNUP tab -->
+    <div id="Signup" class="tabcontent">
+      <form>
+        <div class="form-control"> 
+          <label><b>First Name</b></label>  
+          <input type="text" 
+                  placeholder="Enter first name"
+                  name="first" required>  
+        </div> 
+
+        <div class="form-control"> 
+          <label><b>Last Name</b></label>  
+          <input type="text" 
+                  placeholder="Enter last name"
+                  name="first" required>  
+        </div> 
+        <div class="form-control"> 
+          <label><b>Email</b></label>  
+          <input type="email" 
+                  placeholder="Enter email"
+                  name="email" required>  
+          <i class="fa fa-user fa-lg"></i> 
+        </div> 
+          
+        <div class="form-control"> 
+            <label><b>Password</b></label>  
+            <input type="password"
+                    placeholder="Enter Password"
+                    name="psw" required>  
+            <i class="fa fa-key fa-lg"></i> 
+        </div>    
+          
+        <button type="submit" class="button">Signup</button>  
+      </form>
+    </div>
+   </article>
+
+    <!-- Script handling switching between login and sign up tabs -->
+    <script>
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      </script>
+   
+</body>
+</html>

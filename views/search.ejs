@@ -1,18 +1,19 @@
 <%- include('includes/head.ejs')%>
 <link rel="stylesheet" href="css/search.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body>
 <%- include('includes/header.ejs')%>
 <div class="search_bar">
-    <form class="form_search" action="/" method="POST">
+    <form class="form_search" action="/search" method="POST">
         <h3>Search by</h3>
         <select name="searchBy">
             <option value="title" aria-checked="true">Title</option>
             <option value="author">Author</option>
         </select>
         <h3>For</h3>
-        <input type="text" placeholder="Enter keywords..." name="search2">
-        <button type="submit">search</button>
+        <input type="text" placeholder="Keywords..." name="search2">
+        <button type="submit"><i class="fa fa-search"></i></button>
       </form>
 </div>
 </body>

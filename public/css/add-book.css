@@ -1,0 +1,66 @@
+.add-book-form {
+    width: 24rem;
+    max-width: 90%;
+    margin: 1rem auto;
+    display: block;
+    background-color: #14213d;
+    padding: 1rem;
+}
+
+.form-control {
+    margin: 1rem 0;
+}
+
+#image {
+    height: 40px;
+    width:20.2rem;
+    color: white;
+    border: none;
+}
+
+.form-control input,
+.form-control textarea {
+    display: block;
+    width: 90%;
+    margin: 1% 4%;
+}
+
+.form-control label {
+    color: white;
+    margin: 1% 4%;
+}
+
+.form-control input
+ {
+    border: 1px solid #a1a1a1;
+    font: inherit;
+    border-radius: 2px;
+    height: 35px;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+    outline-color: #00695c;
+}
+
+.form-control input.invalid,
+.form-control textarea.invalid {
+    border-color: red;
+}
+
+.button{
+    display: inline-block;
+    text-decoration: none;
+    border: 1px solid #fca311;
+    border-radius: 4px;
+    color: #fca311;
+    background-color:  #14213d;
+    padding: 3px 7px;
+    margin: 0 40%;
+    width: 4rem;
+}
+
+.button:hover {
+    background-color:  #fca311;;
+    color:  #14213d;
+}

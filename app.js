@@ -1,6 +1,7 @@
-//installed express, nodemon, body-parser, ejs, mongodb driver
+//installed express, nodemon, body-parser, ejs, mongodb driver, mongoose
 
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();  
 
@@ -26,4 +27,12 @@ app.use((req, res) => {
   res.status(404).render('404', {pageTitle: 'Page not found'});
 });
 
-app.listen(3000);
+mongoose
+  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.6o43l.mongodb.net/exlibris?retryWrites=true&w=majority`)
+  .then(result => {
+    app.listen(process.env.PORT || 3000);
+    console.log('Connected!');
+  })
+  .catch(err => {
+    console.log(err);
+  })

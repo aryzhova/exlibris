@@ -3,9 +3,6 @@ const readerController = require('../controllers/reader');
 
 const router = express.Router();
 
-// / GET request
-router.get('/', readerController.getIndex);
-
 // /search GET request
 router.get('/search', readerController.getSearch);
 

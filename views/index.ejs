@@ -5,28 +5,18 @@
 <%- include('includes/header.ejs')%>
 <main>
     <div class="grid">
-        <article class="book_item">
-            <!-- <header>
-                <h1>Miss Bindergarten Celebrates the Last Day of KinderGarten</h1>
-            </header> -->
-            <div class="img_container">
-                <img class="book_image" src="images/kids.jpg">
-            </div>
-            <div></div>
-            <div class="book_actions">
-                <a class="button" href="/cdwo">Details</a>
-            </div>
-        </article>
+       <% for(let book of books) {%>
+            <article class="book_item">
+                <div class="img_container">
+                    <img class="book_image" src="/<%= book.imageUrl %>" alt="<%= book.title %>">
+                </div>
+                <div></div>
+                <div class="book_actions">
+                    <a class="button" href="/<%= book._id %>">Details</a>
+                </div>
+            </article>
+        <% } %>
 
-        <article class="book_item">
-           
-            <div class="img_container">
-                 <img class="book_image" src="images/tolstoy.jpg">
-            </div> 
-            <div class="book_actions">
-                <a class="button" href="/">Details</a>
-            </div>
-        </article>
     </div>
 </main>
 </body>

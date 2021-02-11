@@ -1,9 +1,4 @@
 
-exports.getIndex = (req, res, next) => {
-  res.render('index', {
-    pageTitle: 'All books'
-  });
-}
 
 exports.getSearch = (req, res, next) => {
   res.render('search', {

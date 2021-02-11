@@ -11,12 +11,8 @@ const bookSchema = new Schema({
     type: String,
     required: true
   }, 
-  year: {
-    type: number
-  },
-  imageUrl: {
-    type: String
-  }, 
+  year: Number,
+  imageUrl: String,
   description: {
     type: String,
     required: true
@@ -25,9 +21,7 @@ const bookSchema = new Schema({
     type: Boolean,
     required: true
   },
-  borrowedBy: {
-    type: String
-  },
+  borrowedBy: String,
   queue: {
     users: [
       {

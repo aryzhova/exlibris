@@ -18,7 +18,13 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  history: [
+    {
+      bookId: { type: Object, required: true},
+      bookTitle: { type: String, required: true}
+    }
+  ]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -20,7 +20,6 @@ exports.getBookDetail = (req, res, next) => {
 
   Book.findById(bookId)
       .then(book => {
-        console.log(book);
         res.render('book-detail', {
           pageTitle: 'Book Detail',
           book: book,

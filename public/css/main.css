@@ -31,12 +31,9 @@ body {
     margin: 30px 0;
 }
 
-
-
 .main-header_auth-list__item a{
    color: white;
    text-decoration: none;
-   margin-top: 600px;
 }
 
 .main-header_auth-list__item button{
@@ -46,6 +43,11 @@ body {
     border-radius: 20px;
     font: inherit;
  }
+
+.main-header_auth-list__item{
+    margin-top: 60%;
+    margin-right: 10px;
+}
 
 
 .main-header__item-list {

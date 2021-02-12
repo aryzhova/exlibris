@@ -5,10 +5,11 @@
 <body>
     <%- include('includes/header.ejs')%>
     <article >
-        <div class="img_container">
+        <form class="img_container" action="/request-book" method="POST">
             <img class="book_image" src="<%= book.imageUrl %>">
-            <a class="button" href="/">Place Request</a>
-        </div>
+            <input type="hidden" name="bookId" value="<%= book._id %>">
+            <button class="button" type="submit" %>">Place Request</button>
+        </form>
         <header>
             <h1><%= book.title %></h1>
         </header>
@@ -19,7 +20,7 @@
         <% }  else { %>
             <span class="borrowed">Borrowed</span>
         <% } %>    
-        <span class="queue"><% if(book.queue) %> in a queue</span>
+        <span class="queue"><%= book.queue.users.length %> in a queue</span>
         <p><%= book.description %></p>
     </article>
 </body>

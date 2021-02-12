@@ -42,7 +42,7 @@ h3{
 }
 
 
-.button{
+.button {
     display: block;
     text-decoration: none;
     border: 2px solid #14213d;
@@ -51,7 +51,7 @@ h3{
     color: #14213d;
     font-weight: 600;
     padding: 3% 25%;
-    width: 110px;
+    width: 225px;
     margin: auto;
 }
 

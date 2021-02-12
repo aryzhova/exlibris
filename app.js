@@ -1,4 +1,4 @@
-//installed express, nodemon, body-parser, ejs, mongodb driver, mongoose
+//installed express, nodemon, body-parser, ejs, mongodb driver, mongoose, express-session, connect-flash
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const app = express();  
 const path = require('path');
 const favicon = require('serve-favicon');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const bodyParser = require('body-parser');
 
@@ -20,7 +22,9 @@ app.use(express.static(__dirname + '/public')); //public directory serving stati
 
 app.set('view engine', 'ejs'); // setting ejs as templating engine
 app.set('views', 'views');
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(flash());
+app.use
 
 
 app.use(adminRoutes);

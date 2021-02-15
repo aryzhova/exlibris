@@ -1,17 +1,19 @@
 
 <body>
     <div id="logo">
-        <img src="logo/logo.png" width="100"/>
+            <img src="logo/logo.png" width="100"/>
         <ul class="main-header__auth-list">
-            <li class="main-header_auth-list__item" >
-                <a href="/login">Login</a>
-            </li>
-             
-            <!-- <li class="main-header_auth-list__item">
+            <% if(!isAuthenticated) { %>
+                <li class="main-header_auth-list__item" >
+                    <a href="/login">Login</a>
+                </li>
+            <% } else { %>
+            <li class="main-header_auth-list__item">
                 <form action="/logout" method="post"> 
                     <button type="submit">Logout</button>
                 </form>
-            </li>   -->
+            </li>  
+            <% } %>
         </ul>
         <img id="auth_icon" src="logo/auth_icon.png" width="40"/>
     </div>
@@ -19,31 +21,31 @@
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
                 <li class="main-header__item">
-                    <a  href="/">Browse</a>
+                    <a class="<%= path=== '/' ? 'active' : '' %>" href="/">Browse</a>
                 </li>
                 <li class="main-header__item">
-                    <a  href="/search">Search</a>
+                    <a  class="<%= path=== '/search' ? 'active' : '' %>" href="/search">Search</a>
                 </li>
-                
-                <li class="main-header__item">
-                    <a  href="/my-requests">My requests</a>
-                </li>
-                <li class="main-header__item">
-                    <a  href="/history">History</a>
-                </li>
-                <li class="main-header__item">
-                    <a  href="/add-book">Add Book
-                    </a>
-                </li>
-                <li class="main-header__item">
-                    <a  href="/pastdue">Items Past Due
-                    </a>
-                </li>
-                <li class="main-header__item">
-                    <a  href="/holds">Holds
-                    </a>
-                </li>
-            
+                <% if(isAuthenticated) { %>
+                    <li class="main-header__item">
+                        <a  class="<%= path=== '/my-requests' ? 'active' : '' %>" href="/my-requests">My requests</a>
+                    </li>
+                    <li class="main-header__item">
+                        <a  class="<%= path=== '/history' ? 'active' : '' %>" href="/history">History</a>
+                    </li>
+                    <li class="main-header__item">
+                        <a  class="<%= path=== '/add-book' ? 'active' : '' %>" href="/add-book">Add Book
+                        </a>
+                    </li>
+                    <li class="main-header__item">
+                        <a  class="<%= path=== '/pastdue' ? 'active' : '' %>" href="/pastdue">Items Past Due
+                        </a>
+                    </li>
+                    <li class="main-header__item">
+                        <a  class="<%= path=== '/holds' ? 'active' : '' %>" href="/holds">Holds
+                        </a>
+                    </li>
+                <% } %>
             </ul>
         
         </nav>

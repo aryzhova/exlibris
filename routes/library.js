@@ -6,10 +6,6 @@ const router = express.Router();
 // / GET request
 router.get('/', libraryController.getIndex);
 
-router.get('/login', (req, res) => {
-  res.render('login', {pageTitle: 'Login'});
-});
-
-router.get('/:bookId', libraryController.getBookDetail);
+router.get('/book/:bookId', libraryController.getBookDetail);
 
 module.exports = router;

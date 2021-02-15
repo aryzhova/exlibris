@@ -14,6 +14,4 @@ router.post('/request-book', readerController.postRequest);
 // /history GET request
 router.get('/history', readerController.getHistory);
 
-
-
 module.exports = router;

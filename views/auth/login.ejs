@@ -1,10 +1,10 @@
-<%- include('includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="css/add-book.css">
 <link rel="stylesheet" href="css/login.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body>
-    <%- include('includes/header.ejs')%>
+    <%- include('../includes/header.ejs')%>
    
    <article>
     <div class="tab">
@@ -13,12 +13,12 @@
     </div>
       <!-- LOGIN tab -->
     <div id="Login" class="tabcontent login">
-        <form>
+        <form action="/login" method="POST">
             <div class="form-control"> 
                 <label><b>Email</b></label>  
                 <input type="email" 
                         placeholder="Enter email"
-                        name="email" required>  
+                        name="email">  
                 <i class="fa fa-user fa-lg"></i> 
             </div> 
               
@@ -26,7 +26,7 @@
                 <label><b>Password</b></label>  
                 <input type="password"
                         placeholder="Enter Password"
-                        name="psw" required>  
+                        name="psw">  
                 <i class="fa fa-key fa-lg"></i> 
             </div>    
               
@@ -35,7 +35,7 @@
     </div>
     <!-- SIGNUP tab -->
     <div id="Signup" class="tabcontent">
-      <form>
+      <form action="/signup" method="POST">
         <div class="form-control"> 
           <label><b>First Name</b></label>  
           <input type="text" 

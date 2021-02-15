@@ -2,7 +2,8 @@ const Book = require('../models/book');
 
 exports.getSearch = (req, res, next) => {
   res.render('search', {
-    pageTitle: 'Search'
+    pageTitle: 'Search',
+    isAuthentiacated: req.session.isAuthenticated
   });
 }
 
@@ -29,12 +30,14 @@ exports.postRequest = (req, res, next) => {
 
 exports.getMyRequests = (req, res, next) => {
   res.render('reader/my-requests', {
-    pageTitle: 'My Requests'
+    pageTitle: 'My Requests',
+    isAuthentiacated: req.session.isAuthenticated
   });
 }
 
 exports.getHistory = (req, res, next) => {
   res.render('reader/history', {
-    pageTitle: 'History'
+    pageTitle: 'History',
+    isAuthentiacated: req.session.isAuthenticated
   });
 }

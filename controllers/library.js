@@ -8,7 +8,7 @@ exports.getIndex = (req, res, next) => {
         res.render('index', {
           books: books,
           pageTitle: 'All books',
-          isAuthenticated: false,
+          isAuthenticated: req.session.isAuthenticated,
           path: '/'
         });
       })
@@ -25,7 +25,7 @@ exports.getBookDetail = (req, res, next) => {
         res.render('book-detail', {
           pageTitle: 'Book Detail',
           book: book,
-          isAuthenticated: false,
+          isAuthenticated: req.session.isAuthenticated,
           path: '/'
         });
       })

@@ -12,29 +12,28 @@ exports.getSearch = (req, res, next) => {
 exports.postRequest = (req, res, next) => {
   const bookId = req.body.bookId;
 
-  const request = new Request({
-    book: bookId,
-    userId: '6026993d070288649645bf64',
-    startDate: new Date(),
-    dueDate: new Date().setDate(new Date().getDate()+14),
-    isPending: true
-  });
-
-  request
-    .save()
-    .then(() => {
-      return Book.findById(bookId);
-    })
+  Book.findById(bookId)
     .then(book => {
       const users = book.queue.users;
       users.push({ _id: '6026993d070288649645bf64'});
       book.queue.users = users;
 
-      return book.save()
-        .then(result => {
-          console.log('you are on a queue');
-          res.redirect(`/book/${bookId}`);
-        })
+      return book.save();
+    })
+    .then(book => {
+      console.log('is it a book?', book);
+      const request = new Request({
+        book: book,
+        userId: '6026993d070288649645bf64',
+        startDate: new Date(),
+        dueDate: new Date().setDate(new Date().getDate()+14),
+        isPending: true
+      });
+
+      return request.save();
+    })
+    .then(() => {
+      res.redirect(`/book/${bookId}`);
     })
     .catch(err => {
       console.log(err);
@@ -43,12 +42,18 @@ exports.postRequest = (req, res, next) => {
 };
 
 exports.getMyRequests = (req, res, next) => {
-  res.render('reader/my-requests', {
-    pageTitle: 'My Requests',
-    isAuthenticated: req.session.isAuthenticated,
-    path: '/'
-  });
-}
+  let requests;
+
+  Request.find()
+    .then(requests => {
+      res.render('reader/my-requests', {
+        pageTitle: 'My Requests',
+        requests: requests,
+        isAuthenticated: req.session.isAuthenticated,
+        path: '/my-requests'
+      });
+    })
+};
 
 exports.getHistory = (req, res, next) => {
   res.render('reader/history', {

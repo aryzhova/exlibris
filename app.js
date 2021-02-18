@@ -1,4 +1,6 @@
-//installed express, nodemon, body-parser, ejs, mongodb driver, mongoose, express-session, connect-flash, express-session, connect-mongodb-session
+//installed express, nodemon, body-parser, ejs, mongodb driver, mongoose,
+// express-session, connect-flash, express-session, connect-mongodb-session
+//bcryptjs
 
 const express = require('express');
 const app = express();  

@@ -19,10 +19,13 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  history: [
+  pendingRequests: [
     {
-      bookId: { type: Object, required: true},
-      bookTitle: { type: String, required: true}
+      bookId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Book',
+        required: true
+      }
     }
   ]
 });

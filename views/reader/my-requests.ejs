@@ -9,9 +9,9 @@
            <% requests.forEach(request => { %>
                 <li class="request__item">
                    <img src="" id="book_img" >
-                   <h2>Book: <%= request.book.title %></h2>
-                   <form action="/" method="POST">
-                    <input type="hidden" value="" name="productId">
+                   <h2>Book: <%= request._id %></h2>
+                   <form action="/cancel-request" method="POST">
+                    <input type="hidden" value="<%= request._id %>" name="requestId">
                     <button class="btn danger" type="submit">Delete</button>
                    </form>
                 </li>

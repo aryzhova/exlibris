@@ -15,7 +15,7 @@ exports.postRequest = (req, res, next) => {
   Book.findById(bookId)
     .then(book => {
       const users = book.queue.users;
-      users.push({ _id: '6026993d070288649645bf64'});
+      users.push({ _id: req.session.user._id});
       book.queue.users = users;
 
       return book.save();
@@ -24,7 +24,7 @@ exports.postRequest = (req, res, next) => {
       console.log('is it a book?', book);
       const request = new Request({
         book: book,
-        userId: '6026993d070288649645bf64',
+        userId: req.session.user._id,
         startDate: new Date(),
         dueDate: new Date().setDate(new Date().getDate()+14),
         isPending: true
@@ -41,10 +41,42 @@ exports.postRequest = (req, res, next) => {
 
 };
 
+exports.postcancelRequest = (req, res, next) => {
+  console.log(req.body);
+  const requestId = req.body.requestId;
+  let bookId;
+
+  Request.findById(requestId)
+    .then(request => {
+      if(!request){
+        return console.log("request not found");
+      }
+      bookId = request.book._id;
+      return request.deleteOne({ _id: requestId });
+    })
+    .then(() => {
+      return Book.findById(bookId);
+    })
+    .then(book => {
+      console.log('users', book.queue.users);
+      let newQueue = book.queue.users.filter(user => {
+        return user._id.toString() !== req.session.user._id.toString();
+      });
+      book.queue.users = newQueue;
+      book.save()
+        .then(result => {
+          res.redirect('/my-requests');
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 exports.getMyRequests = (req, res, next) => {
   let requests;
 
-  Request.find()
+  Request.find({ userId: req.session.user._id })
     .then(requests => {
       res.render('reader/my-requests', {
         pageTitle: 'My Requests',

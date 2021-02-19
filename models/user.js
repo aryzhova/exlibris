@@ -18,16 +18,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  },
-  pendingRequests: [
-    {
-      bookId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Book',
-        required: true
-      }
-    }
-  ]
+  }
 });
 
 module.exports = mongoose.model('User', userSchema);

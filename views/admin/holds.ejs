@@ -1,5 +1,25 @@
 <%- include('../includes/head.ejs')%>
+<link rel="stylesheet" href="css/my-requests.css">
 </head>
 <body>
     <%- include('../includes/header.ejs')%>
+    <main>
+        <% if(holds.length > 0) { %>
+        <ul class="request__item-list">
+            <% holds.forEach(hold => { %>
+                    <li class="request__item">
+                    <img src="" id="book_img" >
+                    <div>
+                        <h2>Book: <%= hold.book.title %></h2>
+                        <h6>Requested on <%= hold.startDate.toLocaleDateString("en-US",{year:'numeric', month:'long', day:'numeric'})%></h6>
+                    </div>
+                    <div>
+                        <a class="button" href="/book/<%= hold.book._id %>">Details</a>
+                    </div>
+                    </li>
+                <% }) %>    
+        </ul>    
+        <% } %>   
+    </main>
 </body>
+</html>

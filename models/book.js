@@ -25,7 +25,7 @@ const bookSchema = new Schema({
   queue: {
     users: [
       {
-        user: {type: Schema.Types.ObjectId, ref: 'User'}
+        user: {type: Object}
       }
     ]
   }

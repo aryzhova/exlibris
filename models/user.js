@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const Schema  = mongoose.Schema;
 
+const roles = {
+  ADMIN: "admin",
+  READER: "reader"
+}
+
 const userSchema = new Schema({
   firstName: {
     type: String,
@@ -17,6 +22,10 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    required: true
+  },
+  role: {
+    type: roles,
     required: true
   }
 });

@@ -5,11 +5,20 @@
 <body>
     <%- include('includes/header.ejs')%>
     <article >
-        <form class="img_container" action="/request-book" method="POST">
-            <img class="book_image" src="<%= book.imageUrl %>">
-            <input type="hidden" name="bookId" value="<%= book._id %>">
-            <button class="button" type="submit" %>">Place Request</button>
-        </form>
+        <% if(isAuthenticated){ %>
+            <form class="img_container" action="/request-book" method="POST">
+                <img class="book_image" src="<%= book.imageUrl %>">
+                <input type="hidden" name="bookId" value="<%= book._id %>">
+                <button class="button" type="submit">Place Request</button>
+            </form>
+        <% } %>    
+        <% if(isAdmin) { %>
+            <form class="img_container" action="/issue-book" method="POST">
+                <img class="book_image" src="<%= book.imageUrl %>">
+                <input type="hidden" name="bookId" value="<%= book._id %>">
+                <button class="button" type="submit">Issue book</button>
+            </form>
+        <% } %>    
         <header>
             <h1><%= book.title %></h1>
         </header>
@@ -21,6 +30,13 @@
             <span class="borrowed">Borrowed</span>
         <% } %>    
         <span class="queue"><%= book.queue.users.length %> in a queue</span>
+        <% if(isAdmin) { %>
+            <select name="reader">
+                <% for(let reader of book.queue.users ){ %>
+                <option><%= reader._id %></option>
+                <% } %>
+            </select>
+        <% } %>    
         <p><%= book.description %></p>
     </article>
 </body>

@@ -16,6 +16,10 @@
   margin-top: 10px;
 }
 
+h6{
+  margin: 0;
+}
+
 .request__item h1,
 .request__item h2 {
   margin-right: 1rem;

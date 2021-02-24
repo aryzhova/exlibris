@@ -5,6 +5,7 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     pageTitle: 'Login',
     isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
     path: '/login'
   });
 };
@@ -22,12 +23,16 @@ exports.postLogin = (req, res, next) => {
       bcrypt.compare(password, user.password)
         .then(passwordsMatch => {
           if(passwordsMatch){
-            req.session.isAuthenticated = true;
+            if(user.role === "reader"){
+              req.session.isAuthenticated = true;
+            } else {
+              req.session.isAdmin = true;
+            }
             req.session.user = user;
             return req.session.save(err => {
               console.log(err);
               res.redirect('/');
-            })
+            });
           }
           res.redirect('/login');
         })
@@ -66,7 +71,8 @@ exports.postSignup = (req, res, next) => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: "reader"
           });
   
           return user.save();

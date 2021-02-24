@@ -1,14 +1,14 @@
 const Book = require('../models/book');
 
 exports.getIndex = (req, res, next) => {
-  let allbooks;
-
+ 
   Book.find()
       .then(books => {
         res.render('index', {
           books: books,
           pageTitle: 'All books',
           isAuthenticated: req.session.isAuthenticated,
+          isAdmin: req.session.isAdmin,
           path: '/'
         });
       })
@@ -26,6 +26,7 @@ exports.getBookDetail = (req, res, next) => {
           pageTitle: 'Book Detail',
           book: book,
           isAuthenticated: req.session.isAuthenticated,
+          isAdmin: req.session.isAdmin,
           path: '/'
         });
       })

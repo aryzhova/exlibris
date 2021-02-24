@@ -5,6 +5,7 @@ exports.getSearch = (req, res, next) => {
   res.render('search', {
     pageTitle: 'Search',
     isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
     path: '/search'
   });
 }
@@ -15,13 +16,19 @@ exports.postRequest = (req, res, next) => {
   Book.findById(bookId)
     .then(book => {
       const users = book.queue.users;
-      users.push({ _id: req.session.user._id});
-      book.queue.users = users;
 
+      //checking if user is already on a queue
+      for(let i=0; i<users.length; i++){
+        if(users[i]._id.toString() === req.session.user._id.toString()){
+          return res.redirect('/my-requests');
+        }
+      }
+
+      users.push(req.session.user);
+      book.queue.users = users;
       return book.save();
     })
     .then(book => {
-      console.log('is it a book?', book);
       const request = new Request({
         book: book,
         userId: req.session.user._id,
@@ -82,6 +89,7 @@ exports.getMyRequests = (req, res, next) => {
         pageTitle: 'My Requests',
         requests: requests,
         isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
         path: '/my-requests'
       });
     })
@@ -91,6 +99,7 @@ exports.getHistory = (req, res, next) => {
   res.render('reader/history', {
     pageTitle: 'History',
     isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
     path: '/'
   });
 }

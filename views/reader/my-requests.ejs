@@ -9,7 +9,10 @@
            <% requests.forEach(request => { %>
                 <li class="request__item">
                    <img src="" id="book_img" >
-                   <h2>Book: <%= request._id %></h2>
+                   <div>
+                    <h2>Book: <%= request.book.title %></h2>
+                    <h6>Requested on <%=request.startDate.toLocaleDateString("en-US",{year:'numeric', month:'long', day:'numeric'})%></h6>
+                   </div>
                    <form action="/cancel-request" method="POST">
                     <input type="hidden" value="<%= request._id %>" name="requestId">
                     <button class="btn danger" type="submit">Delete</button>

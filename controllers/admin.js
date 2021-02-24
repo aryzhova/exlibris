@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const Book = require('../models/book');
+const Request = require('../models/request');
 
 exports.getAddBook = (req, res, next) => {
   res.render('admin/add-book', {
     pageTitle: 'Add Book',
     isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
     path: '/add-book'
   });
 }
@@ -36,17 +38,57 @@ exports.postAddBook = (req, res, next) => {
 }
 
 exports.getPastDue = (req, res, next) => {
-  res.render('admin/pastdue', { 
+  res.render('admin/items-due', { 
     pageTitle: 'Items past due',
     isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
     path: '/pastdue'
   });
 }
 
 exports.getHolds = (req, res, next) => {
-  res.render('admin/holds', {
-    pageTitle: 'Holds',
-    isAuthenticated: req.session.isAuthenticated,
-    path: '/holds'
-  });
+
+  Request.find({ isPending: true })
+    .then(holds => {
+      res.render('admin/holds', {
+        pageTitle: 'Holds',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        path: '/holds',
+        holds: holds
+      });
+    })
+}
+
+exports.postIssueBook = (req, res, next) => {
+  const bookId = req.body.bookId;
+  const readerId = req.body.reader;
+  let issuedBook;
+
+  Book.findById(bookId)
+    .then(book => {
+      issuedBook = book;
+      book.isAvailable = false;
+      //deleting reader from the queue
+      let newQueue = book.queue.users.filter(user => {
+        return user._id.toString() !== readerId;
+      });
+      book.queue.users = newQueue;
+      book.save(); 
+    })
+    .then(result => {
+      Request.findOne({ userId: readerId, book: issuedBook})
+        .then(request => {
+          request.isPending = false;
+          request.dueDate = new Date().setDate(new Date().getDate()+14);
+          request.save()
+            .then(result=> {
+              res.redirect(`/book/${bookId}`);
+            })
+        })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
 }

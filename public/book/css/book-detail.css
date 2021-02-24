@@ -41,7 +41,6 @@ h3{
     margin-left: 10px;
 }
 
-
 .button {
     display: block;
     text-decoration: none;
@@ -55,7 +54,8 @@ h3{
     margin: auto;
 }
 
-.button:hover {
+.button:hover, .button:disabled {
     background-color:  #e79106;
     color:  #14213d;
 }
+

@@ -10,8 +10,8 @@ router.get('/my-requests', isAuth,  readerController.getMyRequests);
 
 router.post('/cancel-request', isAuth, readerController.postcancelRequest);
 
-router.post('/request-book', readerController.postRequest);
+router.post('/request-book', isAuth, readerController.postRequest);
 
-router.get('/history', readerController.getHistory);
+router.get('/history', isAuth, readerController.getHistory);
 
 module.exports = router;

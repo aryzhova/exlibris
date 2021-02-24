@@ -5,20 +5,18 @@
 <body>
     <%- include('includes/header.ejs')%>
     <article >
+
         <% if(isAuthenticated){ %>
             <form class="img_container" action="/request-book" method="POST">
                 <img class="book_image" src="<%= book.imageUrl %>">
                 <input type="hidden" name="bookId" value="<%= book._id %>">
                 <button class="button" type="submit">Place Request</button>
             </form>
-        <% } %>    
-        <% if(isAdmin) { %>
-            <form class="img_container" action="/issue-book" method="POST">
-                <img class="book_image" src="<%= book.imageUrl %>">
-                <input type="hidden" name="bookId" value="<%= book._id %>">
-                <button class="button" type="submit">Issue book</button>
-            </form>
-        <% } %>    
+        <% } %>   
+            <div class="img_container">
+                <img class="book_image" src="<%= book.imageUrl %>">          
+            </div>
+
         <header>
             <h1><%= book.title %></h1>
         </header>
@@ -30,14 +28,31 @@
             <span class="borrowed">Borrowed</span>
         <% } %>    
         <span class="queue"><%= book.queue.users.length %> in a queue</span>
-        <% if(isAdmin) { %>
-            <select name="reader">
-                <% for(let reader of book.queue.users ){ %>
-                <option><%= reader._id %></option>
-                <% } %>
-            </select>
-        <% } %>    
         <p><%= book.description %></p>
+
+        <% if(isAdmin) { %>
+            <form action="/issue-book" method="POST">
+                <input type="hidden" name="bookId" value="<%= book._id %>">
+                <label>Enter user id or select from the drop-down menu:</label>
+                <select name="reader" class="reader-queue" onchange="setUserId(event)">
+                    <option value="" selected disabled hidden>Select reader from the queue</option>
+                    <% for(let reader of book.queue.users ){ %>
+                    <option value="<%= reader._id %>"><%= reader._id %></option>
+                    <% } %>
+                </select>
+                <input type="text" name="userId" id="user-id" required> 
+                <% if( !book.isAvailable ) { %>
+                    <button class="" type="submit" disabled >Issue book</button>
+                <% } else { %>
+                    <button class="" type="submit">Issue book</button>
+                <% } %> 
+            </form>   
+        <% } %>    
     </article>
+    <script>
+        function setUserId(e) {
+            document.getElementById("user-id").value = e.target.value;
+        }
+    </script>
 </body>
 </html>

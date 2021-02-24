@@ -31,6 +31,7 @@ exports.postRequest = (req, res, next) => {
     .then(book => {
       const request = new Request({
         book: book,
+        bookId: book._id,
         userId: req.session.user._id,
         startDate: new Date(),
         dueDate: new Date().setDate(new Date().getDate()+14),
@@ -83,7 +84,7 @@ exports.postcancelRequest = (req, res, next) => {
 exports.getMyRequests = (req, res, next) => {
   let requests;
 
-  Request.find({ userId: req.session.user._id })
+  Request.find({ userId: req.session.user._id, isPending: true })
     .then(requests => {
       res.render('reader/my-requests', {
         pageTitle: 'My Requests',

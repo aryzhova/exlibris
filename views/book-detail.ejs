@@ -5,18 +5,14 @@
 <body>
     <%- include('includes/header.ejs')%>
     <article >
-
-        <% if(isAuthenticated){ %>
-            <form class="img_container" action="/request-book" method="POST">
-                <img class="book_image" src="<%= book.imageUrl %>">
-                <input type="hidden" name="bookId" value="<%= book._id %>">
-                <button class="button" type="submit">Place Request</button>
-            </form>
-        <% } %>   
-            <div class="img_container">
-                <img class="book_image" src="<%= book.imageUrl %>">          
-            </div>
-
+        <form class="img_container" action="/request-book" method="POST">
+            <img class="book_image" src="<%= book.imageUrl %>">
+            <input type="hidden" name="bookId" value="<%= book._id %>">
+            <% if(isAuthenticated){ %>
+            <button class="button" type="submit">Place Request</button>
+            <% } %> 
+        </form>
+    
         <header>
             <h1><%= book.title %></h1>
         </header>

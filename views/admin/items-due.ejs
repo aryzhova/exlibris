@@ -3,6 +3,25 @@
 </head>
 
 <%- include('../includes/header.ejs') %>
+
+  <main>
+    <div class="grid">
+      <% for(let book of dueBooks) {%>
+            <article class="book_item">
+                <div class="img_container">
+                    <img class="book_image" src="/<%= book.book.imageUrl %>" alt="<%= book.book.title %>">
+                </div>
+                <div></div>
+                <div class="book_actions">
+                    <a class="button" href="/book/<%= book.book._id %>">Details</a>
+                </div>
+                <p>Due: <%= book.dueDate.toLocaleDateString("en-US",{year:'numeric', month:'long', day:'numeric'}) %></p>
+            </article>
+            
+        <% } %>
+
+    </div>
+  </main>
  
  </body>
 </html>

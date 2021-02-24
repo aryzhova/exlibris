@@ -38,12 +38,17 @@ exports.postAddBook = (req, res, next) => {
 }
 
 exports.getPastDue = (req, res, next) => {
-  res.render('admin/items-due', { 
-    pageTitle: 'Items past due',
-    isAuthenticated: req.session.isAuthenticated,
-    isAdmin: req.session.isAdmin,
-    path: '/pastdue'
-  });
+  Request.find({ isPending: false })
+    .then(dueBooks => {
+      console.log('due books', dueBooks);
+      res.render('admin/items-due', { 
+        pageTitle: 'Items due',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        path: '/pastdue',
+        dueBooks: dueBooks
+      });
+    })
 }
 
 exports.getHolds = (req, res, next) => {
@@ -62,8 +67,10 @@ exports.getHolds = (req, res, next) => {
 
 exports.postIssueBook = (req, res, next) => {
   const bookId = req.body.bookId;
-  const readerId = req.body.reader;
+  const readerId = req.body.userId;
   let issuedBook;
+
+  console.log("READERiD", readerId);
 
   Book.findById(bookId)
     .then(book => {
@@ -77,8 +84,9 @@ exports.postIssueBook = (req, res, next) => {
       book.save(); 
     })
     .then(result => {
-      Request.findOne({ userId: readerId, book: issuedBook})
+      Request.findOne({ userId: readerId, bookId: issuedBook._id})
         .then(request => {
+          console.log('found request', request);
           request.isPending = false;
           request.dueDate = new Date().setDate(new Date().getDate()+14);
           request.save()

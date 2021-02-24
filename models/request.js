@@ -7,6 +7,11 @@ const requestSchema = new Schema({
      type: Object, 
      required: true
    },
+   bookId: {
+     type: Schema.Types.ObjectId,
+     required: true,
+     ref: 'Book'
+   },
    userId: {
      type: Schema.Types.ObjectId,
      required: true,

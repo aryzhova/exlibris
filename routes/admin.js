@@ -16,6 +16,7 @@ router.get('/pastdue',isAdmin, adminController.getPastDue);
 // /holds GET request
 router.get('/holds', isAdmin, adminController.getHolds);
 
+// /issue-book POST route
 router.post('/issue-book', isAdmin, adminController.postIssueBook);
 
 module.exports = router;

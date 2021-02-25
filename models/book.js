@@ -21,7 +21,10 @@ const bookSchema = new Schema({
     type: Boolean,
     required: true
   },
-  borrowedBy: String,
+  borrowedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   queue: {
     users: [
       {

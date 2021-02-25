@@ -38,11 +38,17 @@
                 </select>
                 <input type="text" name="userId" id="user-id" required> 
                 <% if( !book.isAvailable ) { %>
-                    <button class="" type="submit" disabled >Issue book</button>
+                    <button class="adminBtn" disabled >Issue book</button>
                 <% } else { %>
-                    <button class="" type="submit">Issue book</button>
+                    <button class="adminBtn" type="submit">Issue book</button>
                 <% } %> 
             </form>   
+            <form action="/return-book" method="POST">
+                <label>Currently borrowed by: </label>
+                <input type="hidden" name="bookId" value="<%= book._id %>">
+                <input type="text" id="borrowedBy" name="borrowedBy" value="<%= book.borrowedBy %>" readonly>
+                <button class="adminBtn" type="submit">Mark as returned</button>
+            </form>
         <% } %>    
     </article>
     <script>

@@ -76,6 +76,7 @@ exports.postIssueBook = (req, res, next) => {
     .then(book => {
       issuedBook = book;
       book.isAvailable = false;
+      book.borrowedBy = readerId;
       //deleting reader from the queue
       let newQueue = book.queue.users.filter(user => {
         return user._id.toString() !== readerId;

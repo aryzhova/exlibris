@@ -47,7 +47,12 @@
                 <label>Currently borrowed by: </label>
                 <input type="hidden" name="bookId" value="<%= book._id %>">
                 <input type="text" id="borrowedBy" name="borrowedBy" value="<%= book.borrowedBy %>" readonly>
-                <button class="adminBtn" type="submit">Mark as returned</button>
+                <% if( !book.isAvailable ) { %>
+                    <button class="adminBtn" type="submit">Mark as returned</button>
+                <% } else { %>
+                    <button class="adminBtn" disabled>Mark as returned</button>
+                <% } %> 
+                
             </form>
         <% } %>    
     </article>

@@ -25,6 +25,7 @@ const requestSchema = new Schema({
      type: Date,
      required: true
    },
+   returned: Boolean,
    isPending: {
      type: Boolean,
      required: true

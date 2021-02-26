@@ -37,8 +37,8 @@ exports.postAddBook = (req, res, next) => {
       });
 }
 
-exports.getPastDue = (req, res, next) => {
-  Request.find({ isPending: false })
+exports.getDueItems = (req, res, next) => {
+  Request.find({ isPending: false, returned: false })
     .then(dueBooks => {
       console.log('due books', dueBooks);
       res.render('admin/items-due', { 
@@ -87,7 +87,6 @@ exports.postIssueBook = (req, res, next) => {
     .then(result => {
       Request.findOne({ userId: readerId, bookId: issuedBook._id})
         .then(request => {
-          console.log('found request', request);
           request.isPending = false;
           request.dueDate = new Date().setDate(new Date().getDate()+14);
           request.save()
@@ -100,4 +99,32 @@ exports.postIssueBook = (req, res, next) => {
       console.log(err);
     })
 
+}
+
+exports.postReturnBook = (req, res, next) => {
+  const bookId = req.body.bookId;
+  const readerId = req.body.borrowedBy;
+  let returnedBook;
+
+  Book.findById(bookId)
+    .then(book => {
+      returnedBook = book;
+      book.isAvailable = true;
+      book.borrowedBy = null;
+      book.save(); 
+    })
+    .then(result => {
+      Request.findOne({ userId: readerId, bookId: bookId })
+        .then(request => {
+          request.dueDate = new Date();
+          request.returned = true;
+          request.save()
+            .then(result=> {
+              res.redirect(`/book/${bookId}`);
+            })
+        })
+    })
+    .catch(err => {
+      console.log(err);
+    })
 }

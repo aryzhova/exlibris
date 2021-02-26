@@ -11,13 +11,15 @@ router.get('/add-book', isAdmin, adminController.getAddBook);
 router.post('/add-book', isAdmin, adminController.postAddBook);
 
 // /pastdue GET request
-router.get('/pastdue',isAdmin, adminController.getPastDue);
+router.get('/pastdue',isAdmin, adminController.getDueItems);
 
 // /holds GET request
 router.get('/holds', isAdmin, adminController.getHolds);
 
 // /issue-book POST route
 router.post('/issue-book', isAdmin, adminController.postIssueBook);
+
+router.post('/return-book', isAdmin, adminController.postReturnBook);
 
 module.exports = router;
 

@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="css/add-book.css">
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+    <%- include('../includes/header.ejs')%>
+   
+   <article>
+    
+    <div id="Login" class="tabcontent login">
+        <form action="/reset-password" method="POST">
+            <div class="form-control"> 
+                <label><b>Email</b></label>  
+                <input type="email" 
+                        placeholder="Enter email"
+                        name="email">  
+                <i class="fa fa-user fa-lg"></i> 
+            </div> 
+            <button type="submit" class="button">Reset</button>  
+          </form>
+   </article>
+
+</body>
+</html>

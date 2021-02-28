@@ -102,5 +102,17 @@ exports.postSignup = (req, res, next) => {
       .catch(err => {
         console.log(err);
       })
-
 };
+
+exports.getResetPassword = (req, res, next) => {
+  res.render('auth/reset', {
+    pageTitle: 'Password reset',
+    isAuthenticated: req.session.isAuthenticated,
+    isAdmin: req.session.isAdmin,
+    path: '/reset'
+  });
+}
+
+exports.postResetPassword = (req, res, next) => {
+
+}

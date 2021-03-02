@@ -24,6 +24,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  resetToken: String,
+  resetTokenExpire: Date,
   role: {
     type: roles,
     required: true

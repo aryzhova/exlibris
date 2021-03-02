@@ -1,3 +1,5 @@
+const crypto = require('crypto'); //library we are using to generate secure token
+
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
@@ -114,5 +116,37 @@ exports.getResetPassword = (req, res, next) => {
 }
 
 exports.postResetPassword = (req, res, next) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if(err) {
+      console.log(err);
+      return res.redirect('/reset');
+    }
 
-}
+    const token = buffer.toString('hex');  //token storing hexadecimal characters
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if(!user) {
+          return res.redirect('/reset-password');
+        }
+        user.resetToken = token;
+        user.resetTokenExpire = Date.now() + 3600000;
+        return user.save();
+      })
+      .then(result => {
+        res.redirect('/');
+        transporter.sendMail({
+          to: req.body.email,
+          from: 'anastasiawarm@gmail.com',
+          subject: 'Exlibris Password Reset',
+          html: `
+            <p>You requested password reset</p>
+            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a>to set a new password</p>
+          `
+
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+};

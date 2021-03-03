@@ -113,7 +113,7 @@ exports.getResetPassword = (req, res, next) => {
     isAdmin: req.session.isAdmin,
     path: '/reset'
   });
-}
+};
 
 exports.postResetPassword = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
@@ -140,9 +140,8 @@ exports.postResetPassword = (req, res, next) => {
           subject: 'Exlibris Password Reset',
           html: `
             <p>You requested password reset</p>
-            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a>to set a new password</p>
-          `
-
+            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password</p>
+            `
         })
       })
       .catch(err => {
@@ -150,3 +149,26 @@ exports.postResetPassword = (req, res, next) => {
       });
   });
 };
+
+exports.getNewPassword = (req, res, next) => {
+  const token = req.params.token;
+  User.find({ resetToken: token, resetTokenExpire: {$gt: Date.now()}})
+    .then(user => {
+      console.log(user);
+      res.render('auth/new-password', {
+        pageTitle: 'New Password',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        path: '/new-password',
+        userId: user._id,
+        passwordToken: token
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+exports.postNewPassword = (req, res, next) => {
+  
+}

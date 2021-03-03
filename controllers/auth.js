@@ -152,9 +152,8 @@ exports.postResetPassword = (req, res, next) => {
 
 exports.getNewPassword = (req, res, next) => {
   const token = req.params.token;
-  User.find({ resetToken: token, resetTokenExpire: {$gt: Date.now()}})
+  User.findOne({ resetToken: token, resetTokenExpire: {$gt: Date.now()}})
     .then(user => {
-      console.log(user);
       res.render('auth/new-password', {
         pageTitle: 'New Password',
         isAuthenticated: req.session.isAuthenticated,
@@ -170,5 +169,33 @@ exports.getNewPassword = (req, res, next) => {
 }
 
 exports.postNewPassword = (req, res, next) => {
-  
+  const password = req.body.password;
+  const userId = req.body.userId;
+  const token = req.body.passwordToken;
+  let updatedUser;
+
+  console.log('new pass', password);
+
+  User.findOne({
+    resetToken: token, 
+    resetTokenExpire: {$gt: Date.now() },
+    _id: userId
+  })
+  .then(user => {
+    updatedUser = user;
+    return bcrypt.hash(password, 12);
+  })
+  .then(hashedPassword => {
+    console.log('user', updatedUser);
+    updatedUser.password = hashedPassword;
+    updatedUser.resetToken = undefined;
+    updatedUser.resetTokenExpire = undefined;
+    return updatedUser.save();
+  })
+  .then(result => {
+    res.redirect('/login');
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }

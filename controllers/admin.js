@@ -14,14 +14,17 @@ exports.getAddBook = (req, res, next) => {
 exports.postAddBook = (req, res, next) => {
   const title = req.body.title;
   const author = req.body.author;
+  const image = req.file;
   const year = req.body.year;
   const description = req.body.description;
+
+  console.log(image);
 
   const book = new Book({
     title: title,
     author: author,
     year: year,
-    imageUrl: null, 
+    imageUrl: image.path, 
     description: description,
     isAvailable: true,
     queue: []
@@ -29,7 +32,6 @@ exports.postAddBook = (req, res, next) => {
 
   book.save()
       .then(result => {
-        console.log("Book added");
         res.redirect('/');
       })
       .catch(err => {

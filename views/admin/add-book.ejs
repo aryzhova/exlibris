@@ -4,7 +4,7 @@
 </head>
 <body>
     <%- include('../includes/header.ejs')%>
-    <form class="add-book-form" action="/add-book" method="POST">
+    <form class="add-book-form" action="/add-book" method="POST" enctype="multipart/form-data">
        <div class="form-control">
         <label for="title">Title</label>  
         <input type="text" name="title" id="title" required>  

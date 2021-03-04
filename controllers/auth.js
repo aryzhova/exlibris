@@ -174,8 +174,6 @@ exports.postNewPassword = (req, res, next) => {
   const token = req.body.passwordToken;
   let updatedUser;
 
-  console.log('new pass', password);
-
   User.findOne({
     resetToken: token, 
     resetTokenExpire: {$gt: Date.now() },

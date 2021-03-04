@@ -1,6 +1,7 @@
 //installed express, nodemon, body-parser, ejs, mongodb driver, mongoose,
 // express-session, connect-flash, express-session, connect-mongodb-session
 //bcryptjs
+//multer
 
 const express = require('express');
 const app = express();  
@@ -12,6 +13,7 @@ const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const multer = require('multer');
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.6o43l.mongodb.net/exlibris?retryWrites=true&w=majority`;
 
@@ -20,10 +22,28 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+const  = (req, file, cb) => {
+  if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg'){
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 const bodyParser = require('body-parser');
 
 
 app.use(bodyParser.urlencoded({extended: true})); //middleware parsing the body of the request
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
 app.use(session({
   secret: process.env.SESSION_SECRET, 
   resave: false, 

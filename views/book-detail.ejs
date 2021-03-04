@@ -6,7 +6,7 @@
     <%- include('includes/header.ejs')%>
     <article >
         <form class="img_container" action="/request-book" method="POST">
-            <img class="book_image" src="<%= book.imageUrl %>">
+            <img class="book_image" src="/<%= book.imageUrl %>">
             <input type="hidden" name="bookId" value="<%= book._id %>">
             <% if(isAuthenticated){ %>
             <button class="button" type="submit">Place Request</button>

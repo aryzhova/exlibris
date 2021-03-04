@@ -31,7 +31,7 @@ const fileStorage = multer.diskStorage({
   }
 });
 
-const  = (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
   if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg'){
     cb(null, true);
   } else {
@@ -57,6 +57,7 @@ const libraryRoutes = require('./routes/library');
 const authRoutes = require('./routes/auth');
 
 app.use(express.static(__dirname + '/public')); //public directory serving static files
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.set('view engine', 'ejs'); // setting ejs as templating engine
 app.set('views', 'views');
@@ -70,7 +71,12 @@ app.use(authRoutes);
 app.use(libraryRoutes);
 
 app.use((req, res) => {
-  res.status(404).render('404', {pageTitle: 'Page not found', isAuthentiacated: req.isAuthentiacated});
+  res.status(404).render('404', {
+    pageTitle: 'Page not found', 
+    isAuthenticated: req.isAuthenticated,
+    isAdmin: req.isAdmin,
+    path: 'error'
+  });
 });
 
 mongoose

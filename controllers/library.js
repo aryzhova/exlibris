@@ -72,6 +72,21 @@ exports.postSearch = (req, res, next) => {
       .catch(err => {
         console.log();
       });
+  } else {
+    Book.find({  "author": { "$regex": keyword, "$options": "i" }})
+      .then(books => {
+        console.log(books);
+        res.render('search', {
+          books: books,
+          pageTitle: 'Search',
+          isAuthenticated: req.session.isAuthenticated,
+          isAdmin: req.session.isAdmin,
+          path: '/search'
+        });
+      })
+      .catch(err => {
+        console.log();
+      });
   }
   
 }

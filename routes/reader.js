@@ -4,8 +4,6 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/search', readerController.getSearch);
-
 router.get('/my-requests', isAuth,  readerController.getMyRequests);
 
 router.post('/cancel-request', isAuth, readerController.postcancelRequest);

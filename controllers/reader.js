@@ -1,15 +1,6 @@
 const Book = require('../models/book');
 const Request = require('../models/request');
 
-exports.getSearch = (req, res, next) => {
-  res.render('search', {
-    pageTitle: 'Search',
-    isAuthenticated: req.session.isAuthenticated,
-    isAdmin: req.session.isAdmin,
-    path: '/search'
-  });
-}
-
 exports.postRequest = (req, res, next) => {
   const bookId = req.body.bookId;
 

@@ -7,14 +7,29 @@
 <div class="search_bar">
     <form class="form_search" action="/search" method="POST">
         <h3>Search by</h3>
-        <select name="searchBy">
+        <select name="searchBy" id="searchBy">
             <option value="title" aria-checked="true">Title</option>
             <option value="author">Author</option>
         </select>
         <h3>For</h3>
-        <input type="text" placeholder="Keywords..." name="search2">
+        <input type="text" placeholder="Keywords..." name="keyword" id="keyword">
         <button id="search_btn" type="submit"><i class="fa fa-search"></i></button>
-      </form>
+    </form>
 </div>
+<div class="grid">
+    <% var test = 101; %>
+    <% for(let book of books) {%>
+         <article class="book_item">
+             <div class="img_container">
+                 <img class="book_image" src="/<%= book.imageUrl %>" alt="<%= book.title %>">
+             </div>
+             <div></div>
+             <div class="book_actions">
+                 <a class="button" href="/book/<%= book._id %>">Details</a>
+             </div>
+         </article>
+     <% } %>
+    
+ </div>
 </body>
 </html>

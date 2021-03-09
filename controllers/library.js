@@ -36,3 +36,42 @@ exports.getBookDetail = (req, res, next) => {
 
   
 }
+
+exports.getSearch = (req, res, next) => {
+  Book.find()
+      .then(books => {
+        res.render('search', {
+          books: books,
+          pageTitle: 'Search',
+          isAuthenticated: req.session.isAuthenticated,
+          isAdmin: req.session.isAdmin,
+          path: '/search'
+        });
+      })
+      .catch(err => {
+        console.log();
+      });
+}
+
+exports.postSearch = (req, res, next) => {
+  const searchBy = req.body.searchBy;
+  const keyword = req.body.keyword;
+
+  if(searchBy === "title"){
+    Book.find({  "title": { "$regex": keyword, "$options": "i" }})
+      .then(books => {
+        console.log(books);
+        res.render('search', {
+          books: books,
+          pageTitle: 'Search',
+          isAuthenticated: req.session.isAuthenticated,
+          isAdmin: req.session.isAdmin,
+          path: '/search'
+        });
+      })
+      .catch(err => {
+        console.log();
+      });
+  }
+  
+}

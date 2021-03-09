@@ -1,6 +1,6 @@
 .search_bar{
     background-color: #14213d;
-    height: 100px;
+    height: 80px;
     position: absolute;
     width: 100%;
 }
@@ -14,7 +14,7 @@ h3{
 
 .form_search{
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
     
 }
 

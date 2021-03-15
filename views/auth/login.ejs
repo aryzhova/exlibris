@@ -6,17 +6,22 @@
 <body>
     <%- include('../includes/header.ejs')%>
     <% if(errorMessage) { %>
-      <div><%= errorMessage %></div>
+      <div id="err" class="user-message-error"><%= errorMessage %></div>
     <% } %>
+    <% if(signup) { %>
+      <div id="err" class="user-message-error">signup</div>
+    <% } %>
+
+   
    
    <article>
     <div class="tab">
-      <button class="tablinks active" onclick="openTab(event, 'Login')">Log in</button>
-      <button class="tablinks" onclick="openTab(event, 'Signup')">Sign up</button>
+      <button class="tablinks <%= signup? '' : 'active' %>" onclick="openTab(event, 'Login')">Log in</button>
+      <button class="tablinks <%= signup? 'active' : '' %>" onclick="openTab(event, 'Signup')" id="signup">Sign up</button>
     </div>
       <!-- LOGIN tab -->
     
-    <div id="Login" class="tabcontent login">
+    <div id="Login" class="tabcontent <%= signup? '' : 'display' %>">
         <form action="/login" method="POST">
             <div class="form-control"> 
                 <label><b>Email</b></label>  
@@ -40,7 +45,7 @@
           </form>
     </div>
     <!-- SIGNUP tab -->
-    <div id="Signup" class="tabcontent">
+    <div id="Signup" class="tabcontent <%= signup? 'display' : '' %>">
       <form action="/signup" method="POST">
         <div class="form-control"> 
           <label><b>First Name</b></label>  
@@ -75,10 +80,10 @@
       </form>
     </div>
    </article>
-
     <!-- Script handling switching between login and sign up tabs -->
     <script>
       function openTab(evt, tabName) {
+       
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
@@ -90,6 +95,9 @@
         }
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
+
+        var err = document.getElementById("err");
+        err.remove();
       }
       </script>
    

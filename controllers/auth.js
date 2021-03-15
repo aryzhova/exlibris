@@ -12,12 +12,22 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  if(message.length > 0 ){
+    message = message[0];
+  } else {
+    message = null;
+  }
+  
+  let signup = req.flash('signup');
+
   res.render('auth/login', {
     pageTitle: 'Login',
     isAuthenticated: req.session.isAuthenticated,
     isAdmin: req.session.isAdmin,
-    errorMessage: req.flash('error'),
-    path: '/login'
+    errorMessage: message,
+    path: '/login',
+    signup: signup
   });
 };
 
@@ -46,6 +56,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/');
             });
           }
+          req.flash('error', 'Invalid email or password');
           res.redirect('/login');
         })
         
@@ -74,6 +85,8 @@ exports.postSignup = (req, res, next) => {
       .findOne({ email: email})
       .then(userDoc => {
         if(userDoc) {
+          req.flash('error', 'Email already exists');
+          req.flash('signup', true);
           return res.redirect('/login')
         }
 

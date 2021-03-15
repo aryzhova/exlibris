@@ -5,6 +5,9 @@
 </head>
 <body>
     <%- include('../includes/header.ejs')%>
+    <% if(errorMessage) { %>
+      <div><%= errorMessage %></div>
+    <% } %>
    
    <article>
     <div class="tab">
@@ -12,6 +15,7 @@
       <button class="tablinks" onclick="openTab(event, 'Signup')">Sign up</button>
     </div>
       <!-- LOGIN tab -->
+    
     <div id="Login" class="tabcontent login">
         <form action="/login" method="POST">
             <div class="form-control"> 

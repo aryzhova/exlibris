@@ -1,5 +1,6 @@
 //installed express, nodemon, body-parser, ejs, mongodb driver, mongoose,
-// express-session, connect-flash, express-session, connect-mongodb-session
+// express-session, 
+//connect-flash, express-session, connect-mongodb-session
 //bcryptjs
 //multer
 

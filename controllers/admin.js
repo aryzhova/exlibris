@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { rawListeners } = require("../models/book");
 const Book = require('../models/book');
 const Request = require('../models/request');
 
@@ -40,7 +41,7 @@ exports.postAddBook = (req, res, next) => {
 }
 
 exports.getDueItems = (req, res, next) => {
-  Request.find({ isPending: false, returned: false })
+  Request.find({ isPending: false, returned: null })
     .then(dueBooks => {
       console.log('due books', dueBooks);
       res.render('admin/items-due', { 
@@ -72,13 +73,12 @@ exports.postIssueBook = (req, res, next) => {
   const readerId = req.body.userId;
   let issuedBook;
 
-  console.log("READERiD", readerId);
-
   Book.findById(bookId)
     .then(book => {
       issuedBook = book;
       book.isAvailable = false;
       book.borrowedBy = readerId;
+
       //deleting reader from the queue
       let newQueue = book.queue.users.filter(user => {
         return user._id.toString() !== readerId;
@@ -93,6 +93,7 @@ exports.postIssueBook = (req, res, next) => {
           request.dueDate = new Date().setDate(new Date().getDate()+14);
           request.save()
             .then(result=> {
+              req.flash('confirm', `The book has been issued!` );
               res.redirect(`/book/${bookId}`);
             })
         })
@@ -122,6 +123,7 @@ exports.postReturnBook = (req, res, next) => {
           request.returned = true;
           request.save()
             .then(result=> {
+              req.flash('confirm',"The book is returned");
               res.redirect(`/book/${bookId}`);
             })
         })

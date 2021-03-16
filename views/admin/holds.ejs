@@ -8,7 +8,7 @@
         <ul class="request__item-list">
             <% holds.forEach(hold => { %>
                     <li class="request__item">
-                    <img src="" id="book_img" >
+                    <img src="<%= hold.book.imageUrl %>" id="book_img" >
                     <div>
                         <h2>Book: <%= hold.book.title %></h2>
                         <h6>Requested on <%= hold.startDate.toLocaleDateString("en-US",{year:'numeric', month:'long', day:'numeric'})%></h6>

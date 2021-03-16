@@ -8,12 +8,7 @@
     <% if(errorMessage) { %>
       <div id="err" class="user-message-error"><%= errorMessage %></div>
     <% } %>
-    <% if(signup) { %>
-      <div id="err" class="user-message-error">signup</div>
-    <% } %>
-
-   
-   
+      
    <article>
     <div class="tab">
       <button class="tablinks <%= signup? '' : 'active' %>" onclick="openTab(event, 'Login')">Log in</button>

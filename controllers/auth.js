@@ -20,6 +20,11 @@ exports.getLogin = (req, res, next) => {
   }
   
   let signup = req.flash('signup');
+  if(signup.length > 0){
+    signup = signup[0];
+  } else {
+    signup = null;
+  }
 
   res.render('auth/login', {
     pageTitle: 'Login',
@@ -86,7 +91,7 @@ exports.postSignup = (req, res, next) => {
       .then(userDoc => {
         if(userDoc) {
           req.flash('error', 'Email already exists');
-          req.flash('signup', true);
+          req.flash('signup', 'signup');
           return res.redirect('/login')
         }
 

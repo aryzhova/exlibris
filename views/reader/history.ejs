@@ -1,6 +1,26 @@
 <%- include('../includes/head.ejs')%>
+<link rel="stylesheet" href="css/my-requests.css">
 </head>
 <body>
-<%- include('../includes/header.ejs')%>
+    <%- include('../includes/header.ejs')%>
+    <main>
+        <% if(requests.length > 0) { %>
+            <ul class="request__item-list">
+                <% requests.forEach(request => { %>
+                     <li class="request__item">
+                        <img src="<%= request.book.imageUrl %>" id="book_img" >
+                        <div>
+                         <h2>Book: <%= request.book.title %></h2>
+                         <% if(request.returned) { %>
+                            <h6 style="color: green;">Returned</h6>
+                         <% } else { %>
+                            <h6 style="color: red;">The book is due on <%=request.dueDate.toLocaleDateString("en-US",{year:'numeric', month:'long', day:'numeric'})%></h6>
+                         <% } %>
+                        </div>
+                     </li>
+                 <% }) %>    
+            </ul>    
+         <% } %>   
+    </main>
 </body>
 </html>

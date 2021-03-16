@@ -11,7 +11,8 @@ exports.postRequest = (req, res, next) => {
       //checking if user is already on a queue
       for(let i=0; i<users.length; i++){
         if(users[i]._id.toString() === req.session.user._id.toString()){
-          return res.redirect('/my-requests');
+          req.flash('error', 'You are already in a queue for this book.');
+          return res.redirect(`/book/${bookId}`);
         }
       }
 
@@ -32,6 +33,7 @@ exports.postRequest = (req, res, next) => {
       return request.save();
     })
     .then(() => {
+      req.flash('confirm', 'Your request has been placed! You will receive a phone call when the book is ready for pick up.');
       res.redirect(`/book/${bookId}`);
     })
     .catch(err => {
@@ -88,10 +90,14 @@ exports.getMyRequests = (req, res, next) => {
 };
 
 exports.getHistory = (req, res, next) => {
-  res.render('reader/history', {
-    pageTitle: 'History',
-    isAuthenticated: req.session.isAuthenticated,
-    isAdmin: req.session.isAdmin,
-    path: '/'
-  });
+  Request.find({userId: req.session.user._id, isPending: false})
+    .then(requests => {
+      res.render('reader/history', {
+        pageTitle: 'History',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        requests: requests,
+        path: '/history'
+      });
+    })
 }

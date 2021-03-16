@@ -13,6 +13,11 @@
             <% } %> 
         </form>
     
+        <% if(confirmMessage) { %>
+            <div class="confirm-message" ><%= confirmMessage %></div>
+        <% } else if(errorMessage) { %>
+            <div class="error-message" ><%= errorMessage %></div>
+        <% } %>
         <header>
             <h1><%= book.title %></h1>
         </header>
@@ -27,7 +32,7 @@
         <p><%= book.description %></p>
 
         <% if(isAdmin) { %>
-            <form action="/issue-book" method="POST">
+            <form action="/issue-book" method="POST" class="admin-form">
                 <input type="hidden" name="bookId" value="<%= book._id %>">
                 <label>Enter user id or select from the drop-down menu:</label>
                 <select name="reader" class="reader-queue" onchange="setUserId(event)">
@@ -43,7 +48,7 @@
                     <button class="adminBtn" type="submit">Issue book</button>
                 <% } %> 
             </form>   
-            <form action="/return-book" method="POST">
+            <form action="/return-book" method="POST" class="admin-form">
                 <label>Currently borrowed by: </label>
                 <input type="hidden" name="bookId" value="<%= book._id %>">
                 <input type="text" id="borrowedBy" name="borrowedBy" value="<%= book.borrowedBy %>" readonly>

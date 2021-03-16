@@ -19,6 +19,18 @@ exports.getIndex = (req, res, next) => {
 
 exports.getBookDetail = (req, res, next) => {
   const bookId = req.params.bookId;
+  let confirm = req.flash('confirm');
+  if(confirm){
+    confirm=confirm[0];
+  } else {
+    confirm = null;
+  }
+  let error = req.flash('error');
+  if(error){
+    error = error[0];
+  } else {
+    error = null;
+  }
 
   Book.findById(bookId)
       .then(book => {
@@ -27,6 +39,8 @@ exports.getBookDetail = (req, res, next) => {
           book: book,
           isAuthenticated: req.session.isAuthenticated,
           isAdmin: req.session.isAdmin,
+          confirmMessage: confirm,
+          errorMessage: error,
           path: '/'
         });
       })

@@ -9,7 +9,7 @@
 
 .request__item {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -18,6 +18,7 @@
 
 h6{
   margin: 0;
+  text-align: right;
 }
 
 .request__item h1,

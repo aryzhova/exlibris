@@ -41,7 +41,7 @@
     </div>
     <!-- SIGNUP tab -->
     <div id="Signup" class="tabcontent <%= signup? 'display' : '' %>">
-      <form action="/signup" method="POST">
+      <form action="/signup" method="POST" novalidate>
         <div class="form-control"> 
           <label><b>First Name</b></label>  
           <input type="text" 
@@ -59,7 +59,7 @@
           <label><b>Email</b></label>  
           <input type="email" 
                   placeholder="Enter email"
-                  name="email" required>  
+                  name="email">  
           <i class="fa fa-user fa-lg"></i> 
         </div> 
           
@@ -67,7 +67,7 @@
             <label><b>Password</b></label>  
             <input type="password"
                     placeholder="Enter Password"
-                    name="password" required>  
+                    name="password">  
             <i class="fa fa-key fa-lg"></i> 
         </div>    
           

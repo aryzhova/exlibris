@@ -4,6 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
@@ -84,6 +85,18 @@ exports.postSignup = (req, res, next) => {
     const lastName = req.body.last;
     const email = req.body.email;
     const password = req.body.password;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+      return res.status(422).render('auth/login', {
+        pageTitle: 'Login',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        errorMessage: errors.array()[0],
+        path: '/login',
+        signup: 'signup'
+      });
+    }
 
     //checking if the user already exists in db
     User

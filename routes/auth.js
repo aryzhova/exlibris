@@ -11,7 +11,15 @@ router.post('/login', authController.postLogin);
 
 router.post('/logout', authController.postLogout);
 
-router.post('/signup', check('email').isEmail(), authController.postSignup);
+router.post(
+  '/signup', 
+  [check('email')
+    .isEmail()
+    .withMessage("Please enter a valid email"), 
+   check('password', 'Password should be at least 6 characters long')
+    .isLength({ min: 6 })
+  ],
+  authController.postSignup);
 
 router.get('/reset-password', authController.getResetPassword);
 

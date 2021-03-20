@@ -92,7 +92,7 @@ exports.postSignup = (req, res, next) => {
         pageTitle: 'Login',
         isAuthenticated: req.session.isAuthenticated,
         isAdmin: req.session.isAdmin,
-        errorMessage: errors.array()[0],
+        errorMessage: errors.array()[0].msg,
         path: '/login',
         signup: 'signup'
       });

@@ -33,13 +33,35 @@ exports.getLogin = (req, res, next) => {
     isAdmin: req.session.isAdmin,
     errorMessage: message,
     path: '/login',
-    signup: signup
+    signup: signup,
+    oldInput: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    }
   });
 };
 
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(422).render('auth/login', {
+      pageTitle: 'Login',
+      isAuthenticated: req.session.isAuthenticated,
+      isAdmin: req.session.isAdmin,
+      errorMessage: errors.array()[0].msg,
+      path: '/login',
+      signup: null,
+      oldInput : {
+        email: email,
+        password: password
+      }
+    });
+  }
 
   User.findOne({ email: email})
     .then(user => {
@@ -65,13 +87,14 @@ exports.postLogin = (req, res, next) => {
           req.flash('error', 'Invalid email or password');
           res.redirect('/login');
         })
-        
-    })
+      })
     .catch(err => {
       console.log(err);
       res.redirect('/login');
     });
+  
 };
+
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy( err => {
@@ -94,21 +117,17 @@ exports.postSignup = (req, res, next) => {
         isAdmin: req.session.isAdmin,
         errorMessage: errors.array()[0].msg,
         path: '/login',
-        signup: 'signup'
+        signup: 'signup',
+        oldInput : {
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName
+        }
       });
     }
 
-    //checking if the user already exists in db
-    User
-      .findOne({ email: email})
-      .then(userDoc => {
-        if(userDoc) {
-          req.flash('error', 'Email already exists');
-          req.flash('signup', 'signup');
-          return res.redirect('/login')
-        }
-
-        return bcrypt.hash(password, 12)
+     bcrypt.hash(password, 12)
         .then(hashedPassword => {
           const user = new User({
             firstName: firstName,
@@ -132,8 +151,8 @@ exports.postSignup = (req, res, next) => {
             console.log(err);
           });
          
-        });
-      })
+        })
+    
       .catch(err => {
         console.log(err);
       })

@@ -4,26 +4,52 @@
 </head>
 <body>
     <%- include('../includes/header.ejs')%>
+    <% if(errorMessage){ %>
+        <div id="err" class="user-message-error"><%= errorMessage %></div>
+    <% } %>
     <form class="add-book-form" action="/add-book" method="POST" enctype="multipart/form-data">
        <div class="form-control">
         <label for="title">Title</label>  
-        <input type="text" name="title" id="title" required>  
+        <input 
+            type="text" 
+            name="title" 
+            id="title"
+            value="<%= oldInput.title %>">  
        </div>
        <div class="form-control">
         <label for="author">Author</label>  
-        <input type="text" name="author" id="author" required>
+        <input 
+            type="text" 
+            name="author" 
+            id="author"
+            value="<%= oldInput.author %>">
        </div>
        <div class="form-control">
         <label for="year">Year</label>  
-        <input type="number" name="year" id="year" min="1">
+        <input 
+            type="text" 
+            name="year" 
+            id="year"
+            value="<%= oldInput.year %>">
        </div>
-       <div class="form-control">
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image" >
-       </div>
+       
        <div class="form-control">
         <label for="description">Description</label>  
-        <textarea type="text" name="description" id="description" rows="7"></textarea>
+        <textarea 
+            type="text" 
+            name="description"
+            id="description" 
+            rows="7">
+            <%= oldInput.description %>
+        </textarea>
+       </div>
+
+       <div class="form-control">
+        <label for="image">Image</label>
+        <input 
+            type="file"
+            name="image" 
+            id="image">
        </div>
        <button type="submit" class="button">Submit</button>  
       </form>

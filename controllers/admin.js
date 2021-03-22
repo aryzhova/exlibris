@@ -1,25 +1,63 @@
 const mongoose = require("mongoose");
-const { rawListeners } = require("../models/book");
 const Book = require('../models/book');
 const Request = require('../models/request');
+const { validationResult } = require('express-validator')
 
 exports.getAddBook = (req, res, next) => {
   res.render('admin/add-book', {
     pageTitle: 'Add Book',
     isAuthenticated: req.session.isAuthenticated,
     isAdmin: req.session.isAdmin,
-    path: '/add-book'
+    path: '/add-book',
+    errorMessage: null,
+    oldInput: {}
   });
 }
 
 exports.postAddBook = (req, res, next) => {
   const title = req.body.title;
   const author = req.body.author;
-  const image = req.file;
   const year = req.body.year;
-  const description = req.body.description;
+  const description = req.body.description.trim();
+  const image = req.file;
 
-  console.log(image);
+  const errors = validationResult(req);
+
+  console.log(errors);
+
+  if(!errors.isEmpty() || !description){
+    return res.status(422).render('admin/add-book', {
+      pageTitle: 'Add Book',
+      isAuthenticated: req.session.isAuthenticated,
+      isAdmin: req.session.isAdmin,
+      path: '/add-book',
+      errorMessage: !errors.isEmpty() ? errors.array()[0].msg : "Please provide description",
+      oldInput : {
+        title: title,
+        author: author,
+        year: year,
+        description: description
+      }
+    });
+  }
+
+  if(!image) {
+    return res.status(422).render('admin/add-book', {
+      pageTitle: 'Add Book', 
+      path: '/add-book',
+      errorMessage: 'Attached file is not an image.',
+      isAuthenticated: req.session.isAuthenticated,
+      isAdmin: req.session.isAdmin,
+      oldInput : {
+        title: title,
+        author: author,
+        year: year,
+        description: description
+      }
+    });
+  }
+
+ 
 
   const book = new Book({
     title: title,

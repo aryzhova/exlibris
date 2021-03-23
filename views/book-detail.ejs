@@ -44,8 +44,10 @@
                 <input type="text" name="userId" id="user-id" required> 
                 <% if( !book.isAvailable ) { %>
                     <button class="adminBtn" disabled >Issue book</button>
+                    <button class="adminBtn" disabled >Notify Reader</button>
                 <% } else { %>
                     <button class="adminBtn" type="submit">Issue book</button>
+                    <button class="adminBtn" type="submit" formaction="/notify-reader">Notify Reader</button>
                 <% } %> 
             </form>   
             <form action="/return-book" method="POST" class="admin-form">

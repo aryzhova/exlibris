@@ -41,5 +41,7 @@ router.post('/issue-book', isAdmin, adminController.postIssueBook);
 
 router.post('/return-book', isAdmin, adminController.postReturnBook);
 
+router.post('/notify-reader', isAdmin, adminController.postNotifyReader);
+
 module.exports = router;
 

@@ -1,7 +1,16 @@
 const mongoose = require("mongoose");
+const User = require('../models/user');
 const Book = require('../models/book');
 const Request = require('../models/request');
-const { validationResult } = require('express-validator')
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: process.env.SENDGRID_API
+  }
+}));
 
 exports.getAddBook = (req, res, next) => {
   res.render('admin/add-book', {
@@ -22,8 +31,6 @@ exports.postAddBook = (req, res, next) => {
   const image = req.file;
 
   const errors = validationResult(req);
-
-  console.log(errors);
 
   if(!errors.isEmpty() || !description){
     return res.status(422).render('admin/add-book', {
@@ -169,4 +176,35 @@ exports.postReturnBook = (req, res, next) => {
     .catch(err => {
       console.log(err);
     })
+}
+
+exports.postNotifyReader = (req, res, next) => {
+  const readerId = req.body.userId;
+  const bookId = req.body.bookId;
+  let currentBook;
+  let userToNotify;
+
+    Book
+      .findOne({ _id: bookId})
+      .then(book => {
+        currentBook = book;
+        return User.findOne({ _id: readerId });
+      })
+      .then(reader => {
+        userToNotify = reader;
+        return transporter.sendMail({
+          to: reader.email,
+          from: 'anastasiawarm@gmail.com',
+          subject: 'Your book is ready for pickup!',
+          html: `<h1>The book ${currentBook.title} that you requested is now ready to pick up. Please come to the front desk. </h1>`
+        })
+      })
+      .then(result => {
+         req.flash('confirm', `The reader ${userToNotify.firstName } ${userToNotify.lastName } has been notified!` );
+         res.redirect(`/book/${bookId}`);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    
 }

@@ -52,13 +52,18 @@ app.use(session({
   store: store
 }));
 
+//public directory serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/edit-book',express.static(path.join(__dirname, 'public')));
+app.use('/book',express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 const adminRoutes = require('./routes/admin'); //importing routes
 const readerRoutes = require('./routes/reader');
 const libraryRoutes = require('./routes/library');
 const authRoutes = require('./routes/auth');
 
-app.use(express.static(__dirname + '/public')); //public directory serving static files
-app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 app.set('view engine', 'ejs'); // setting ejs as templating engine
 app.set('views', 'views');

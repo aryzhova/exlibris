@@ -45,5 +45,28 @@ router.post('/notify-reader', isAdmin, adminController.postNotifyReader);
 
 router.post('/delete-book', isAdmin, adminController.postDeleteBook);
 
+router.get('/edit-book/:bookId', isAdmin, adminController.getEditBook);
+
+router.post('/edit-book',
+[
+  body('title', 'Please enter book title')
+    .notEmpty(),
+  body('author', 'Please enter an author')
+    .notEmpty(),
+  body('year')
+    .notEmpty()
+    .withMessage('Please enter a year')
+    .isNumeric()
+    .withMessage('Year is not in a correct format')
+    .custom((value) => {
+      if(value <= 0 || value > new Date().getFullYear().toString()){
+        throw new Error('Please enter correct value for the year');
+      }
+      return true;
+    }),
+
+],
+isAdmin, adminController.postEditBook);
+
 module.exports = router;
 

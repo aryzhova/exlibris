@@ -116,3 +116,17 @@ label {
 .admin-form {
     margin: 0 0 0 252px;
 }
+
+#edit_link {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    margin-top: 10px;
+    display: block;
+}
+
+#edit_link a{
+    text-decoration: none;
+    color: black;
+}

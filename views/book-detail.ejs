@@ -13,9 +13,12 @@
             <% } %> 
             <% if(isAdmin){ %>
                 <button class="button" type="submit" formaction="/delete-book">Delete Book</button>
+                <div id="edit_link">
+                    <a href="/edit-book/<%= book._id %>?edit=true" >Edit Book</a>
+                    <i class="fa fa-edit"></i>
+                </div>
             <% } %> 
         </form>
-    
         <% if(confirmMessage) { %>
             <div class="confirm-message" ><%= confirmMessage %></div>
         <% } else if(errorMessage) { %>

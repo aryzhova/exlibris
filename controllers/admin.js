@@ -5,6 +5,7 @@ const Request = require('../models/request');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
+const book = require("../models/book");
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
@@ -18,6 +19,7 @@ exports.getAddBook = (req, res, next) => {
     isAuthenticated: req.session.isAuthenticated,
     isAdmin: req.session.isAdmin,
     path: '/add-book',
+    isEditing: false,
     errorMessage: null,
     oldInput: {}
   });
@@ -48,8 +50,8 @@ exports.postAddBook = (req, res, next) => {
     });
   }
 
-  if(!image) {
-    return res.status(422).render('admin/add-book', {
+  if(!image) {book
+    return res.status(422).render('admin/add-', {
       pageTitle: 'Add Book', 
       path: '/add-book',
       errorMessage: 'Attached file is not an image.',
@@ -220,4 +222,99 @@ exports.postDeleteBook = (req, res, next) => {
   .catch(err => {
     console.log(err);
   })
+}
+
+exports.getEditBook = (req, res, next) => {
+  //const editMode = req.query.edit;
+  const bookId = req.params.bookId;
+ 
+  Book.findById(bookId)
+    .then(book => {
+      if(!book){
+        return res.redirect('/');
+      }
+      res.render('admin/add-book', {
+        book: book,
+        pageTitle: 'Edit Book',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        path: '/edit-book',
+        errorMessage: null,
+        isEditing: true,
+        oldInput: {}
+    });
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+exports.postEditBook = (req, res, next) => {
+  const bookId = req.body.bookId;
+  const updatedTitle = req.body.title;
+  const updatedAuthor = req.body.author;
+  const updatedYear = req.body.year;
+  const updatedDescription = req.body.description.trim();
+  let updatedImage = req.file;
+
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty() || !updatedDescription){
+    Book.findById(bookId)
+    .then(book=> {
+      return res.status(422).render('admin/add-book', {
+        book:book,
+        pageTitle: 'Edit Book',
+        isAuthenticated: req.session.isAuthenticated,
+        isAdmin: req.session.isAdmin,
+        isEditing: true,
+        path: '/add-book',
+        errorMessage: !errors.isEmpty() ? errors.array()[0].msg : "Please provide description",
+        oldInput : {
+          title: updatedTitle,
+          author: updatedAuthor,
+          year: updatedYear,
+          description: updatedDescription
+        }
+      });
+    })
+  }
+
+  if(!updatedImage) {
+    updatedImage = req.body.imageUrl;
+    // return res.status(422).render('admin/add-book', {
+    //   pageTitle: 'Add Book', 
+    //   path: '/add-book',
+    //   book: book,
+    //   errorMessage: 'Attached file is not an image.',
+    //   isAuthenticated: req.session.isAuthenticated,
+    //   isEditing: true,
+    //   isAdmin: req.session.isAdmin,
+    //   oldInput : {
+    //     title: updatedTitle,
+    //     author: updatedAuthor,
+    //     year: updatedYear,
+    //     description: updatedDescription
+    //   }
+    // });
+  }
+
+  Book.findById(bookId)
+    .then(book => {
+      book.title = updatedTitle;
+      book.author = updatedAuthor;
+      book.year = updatedYear;
+      book.description = updatedDescription;
+      book.image = updatedImage;
+
+      return book.save();
+    })
+    .then(result => {
+        res.redirect('/');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
+
 }

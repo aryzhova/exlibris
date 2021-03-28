@@ -43,5 +43,7 @@ router.post('/return-book', isAdmin, adminController.postReturnBook);
 
 router.post('/notify-reader', isAdmin, adminController.postNotifyReader);
 
+router.post('/delete-book', isAdmin, adminController.postDeleteBook);
+
 module.exports = router;
 

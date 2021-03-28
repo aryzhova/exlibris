@@ -208,3 +208,16 @@ exports.postNotifyReader = (req, res, next) => {
       })
     
 }
+
+exports.postDeleteBook = (req, res, next) => {
+  const bookId = req.body.bookId;
+
+  Book
+    .deleteOne({ _id: bookId })
+    .then(() => {
+      res.redirect(`/`);
+    })
+  .catch(err => {
+    console.log(err);
+  })
+}

@@ -9,7 +9,10 @@
             <img class="book_image" src="/<%= book.imageUrl %>">
             <input type="hidden" name="bookId" value="<%= book._id %>">
             <% if(isAuthenticated){ %>
-            <button class="button" type="submit">Place Request</button>
+             <button class="button" type="submit">Place Request</button>
+            <% } %> 
+            <% if(isAdmin){ %>
+                <button class="button" type="submit" formaction="/delete-book">Delete Book</button>
             <% } %> 
         </form>
     

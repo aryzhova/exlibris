@@ -15,6 +15,7 @@
                    </div>
                    <form action="/cancel-request" method="POST">
                     <input type="hidden" value="<%= request._id %>" name="requestId">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn danger" type="submit">Delete</button>
                    </form>
                 </li>

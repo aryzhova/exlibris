@@ -10,6 +10,7 @@
             <% } else { %>
             <li class="main-header_auth-list__item">
                 <form action="/logout" method="post"> 
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit">Logout</button>
                 </form>
             </li>  

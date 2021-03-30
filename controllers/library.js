@@ -9,6 +9,7 @@ exports.getIndex = (req, res, next) => {
           pageTitle: 'All books',
           isAuthenticated: req.session.isAuthenticated,
           isAdmin: req.session.isAdmin,
+          csrfToken: req.csrfToken(),
           path: '/'
         });
       })

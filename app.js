@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
+const csrf = require('csurf');
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.6o43l.mongodb.net/exlibris?retryWrites=true&w=majority`;
 
@@ -22,6 +23,8 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
 });
+
+const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -52,6 +55,8 @@ app.use(session({
   store: store
 }));
 
+app.use(csrfProtection);
+
 //public directory serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/edit-book',express.static(path.join(__dirname, 'public')));
@@ -70,6 +75,11 @@ app.set('views', 'views');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(flash());
 
+//setting local variables that are passed to the views
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 app.use(adminRoutes);
 app.use(readerRoutes);

@@ -8,6 +8,7 @@
         <form class="img_container" action="/request-book" method="POST">
             <img class="book_image" src="/<%= book.imageUrl %>">
             <input type="hidden" name="bookId" value="<%= book._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <% if(isAuthenticated){ %>
              <button class="button" type="submit">Place Request</button>
             <% } %> 
@@ -55,6 +56,7 @@
                     <button class="adminBtn" type="submit">Issue book</button>
                     <button class="adminBtn" type="submit" formaction="/notify-reader">Notify Reader</button>
                 <% } %> 
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             </form>   
             <form action="/return-book" method="POST" class="admin-form">
                 <label>Currently borrowed by: </label>
@@ -65,7 +67,7 @@
                 <% } else { %>
                     <button class="adminBtn" disabled>Mark as returned</button>
                 <% } %> 
-                
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             </form>
         <% } %>    
     </article>

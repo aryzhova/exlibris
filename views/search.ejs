@@ -13,6 +13,7 @@
         </select>
         <h3>For</h3>
         <input type="text" placeholder="Keywords..." name="keyword" id="keyword">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button id="search_btn" type="submit"><i class="fa fa-search"></i></button>
     </form>
 </div>

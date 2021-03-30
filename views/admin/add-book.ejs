@@ -56,6 +56,7 @@
        <% if (isEditing) { %>
         <input type="hidden" value="<%= book._id %>" name="bookId"> 
        <% } %>   
+       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
        <button type="submit" class="button">Submit</button>  
       </form>
 </body>

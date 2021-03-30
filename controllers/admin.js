@@ -20,6 +20,7 @@ exports.getAddBook = (req, res, next) => {
     isAdmin: req.session.isAdmin,
     path: '/add-book',
     isEditing: false,
+    book: {},
     errorMessage: null,
     oldInput: {}
   });
@@ -41,6 +42,8 @@ exports.postAddBook = (req, res, next) => {
       isAdmin: req.session.isAdmin,
       path: '/add-book',
       errorMessage: !errors.isEmpty() ? errors.array()[0].msg : "Please provide description",
+      book: {},
+      isEditing: false,
       oldInput : {
         title: title,
         author: author,
@@ -50,13 +53,15 @@ exports.postAddBook = (req, res, next) => {
     });
   }
 
-  if(!image) {book
-    return res.status(422).render('admin/add-', {
+  if(!image) {
+    return res.status(422).render('admin/add-book', {
       pageTitle: 'Add Book', 
       path: '/add-book',
       errorMessage: 'Attached file is not an image.',
       isAuthenticated: req.session.isAuthenticated,
       isAdmin: req.session.isAdmin,
+      isEditing: false,
+      book: {},
       oldInput : {
         title: title,
         author: author,

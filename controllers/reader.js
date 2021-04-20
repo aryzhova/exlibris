@@ -33,7 +33,9 @@ exports.postRequest = (req, res, next) => {
       return request.save();
     })
     .then(() => {
-      req.flash('confirm', 'Your request has been placed! You will receive a phone call when the book is ready for pick up.');
+      req.flash(
+      'confirm', 
+      'Your request has been placed! You will receive an email when the book is ready for pick up.');
       res.redirect(`/book/${bookId}`);
     })
     .catch(err => {

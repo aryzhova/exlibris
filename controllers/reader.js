@@ -15,7 +15,6 @@ exports.postRequest = (req, res, next) => {
           return res.redirect(`/book/${bookId}`);
         }
       }
-
       users.push(req.session.user);
       book.queue.users = users;
       return book.save();
@@ -29,7 +28,6 @@ exports.postRequest = (req, res, next) => {
         dueDate: new Date().setDate(new Date().getDate()+14),
         isPending: true
       });
-
       return request.save();
     })
     .then(() => {

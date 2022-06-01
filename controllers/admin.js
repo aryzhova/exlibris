@@ -5,7 +5,6 @@ const Request = require('../models/request');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
-const book = require("../models/book");
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
@@ -95,7 +94,6 @@ exports.postAddBook = (req, res, next) => {
 exports.getDueItems = (req, res, next) => {
   Request.find({ isPending: false, returned: null })
     .then(dueBooks => {
-      console.log('due books', dueBooks);
       res.render('admin/items-due', { 
         pageTitle: 'Items due',
         isAuthenticated: req.session.isAuthenticated,
@@ -287,21 +285,6 @@ exports.postEditBook = (req, res, next) => {
 
   if(!updatedImage) {
     updatedImage = req.body.imageUrl;
-    // return res.status(422).render('admin/add-book', {
-    //   pageTitle: 'Add Book', 
-    //   path: '/add-book',
-    //   book: book,
-    //   errorMessage: 'Attached file is not an image.',
-    //   isAuthenticated: req.session.isAuthenticated,
-    //   isEditing: true,
-    //   isAdmin: req.session.isAdmin,
-    //   oldInput : {
-    //     title: updatedTitle,
-    //     author: updatedAuthor,
-    //     year: updatedYear,
-    //     description: updatedDescription
-    //   }
-    // });
   }
 
   Book.findById(bookId)
@@ -320,6 +303,4 @@ exports.postEditBook = (req, res, next) => {
       .catch(err => {
         console.log(err);
       });
-    
-
 }
